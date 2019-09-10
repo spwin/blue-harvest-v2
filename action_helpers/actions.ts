@@ -245,10 +245,10 @@ export class ChainedAction {
       // location on the page anyway. This allows us to click on <input>
       // elements using Material components which hide the label under the
       // <input>.
-      if (/Other element would receive the click/.test(e.message) &&
-          /mat-input-element/.test(e.message)) {
-        console.log(`Input element is blocking the click - retrying with
-                     specific coordinates`);
+      if (/Other element would receive the click/.test(e.message)) {
+        console.log(
+          `Input element is blocking the click - retrying with specific coordinates`
+        );
         // TODO(ralphj): We should be able to use the shorthand below,
         // but a bug in webdriver bindings causes issues with this and the
         // control flow:
