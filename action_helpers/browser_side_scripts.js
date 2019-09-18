@@ -160,7 +160,7 @@ var browserSideFind = function(locators, opt_options) {
     if (!r.height || !r.width) return DISPLAY_STATUS_ENUM.empty;
     let x = (r.left + r.right) / 2;
     let y = (r.top + r.bottom) / 2;
-    if (hitsAncestorButton(e, x, y)) {
+    if (hitsAncestorButtonOrLink(e, x, y)) {
       return DISPLAY_STATUS_ENUM.visible;
     }
     // Move up to the first clickable element, because elementFromPoint
@@ -422,9 +422,11 @@ var browserSideFind = function(locators, opt_options) {
   };
 
   // Workaround for buttons in Firefox to detect properly.
-  var hitsAncestorButton = function(e, x, y) {
+  var hitsAncestorButtonOrLink = function(e, x, y) {
     var elementAtPoint = document.elementFromPoint(x, y);
-    if (elementAtPoint && elementAtPoint.tagName === 'BUTTON') {
+    if (elementAtPoint &&
+			(elementAtPoint.tagName === 'BUTTON' || elementAtPoint.tagName === 'A')
+		) {
       for (var p = e.parentElement; p; p = p.parentElement) {
         if (p === elementAtPoint) {
           return true;
