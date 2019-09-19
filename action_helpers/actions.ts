@@ -17,7 +17,7 @@ import {BrowserSideOptions, retryingFind} from './find';
 import {FlexibleLocator, Position, PositionalLocator} from './locator_types';
 import {log} from './logger';
 
-const FIND_TIMEOUT = 6 * 1000;
+const FIND_TIMEOUT = 30 * 1000;
 const SLOW_FIND_TIMEOUT = 90 * 1000;
 const AGONIZINGLY_SLOW_FIND_TIMEOUT = 10 * 60 * 1000;
 const PAGE_LOAD_TIMEOUT = 60 * 1000;
