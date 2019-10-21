@@ -256,6 +256,7 @@ export class ChainedAction {
         throw e;
       }
     }
+    await browser.waitForAngular();
   }
 
   /**
@@ -282,6 +283,7 @@ export class ChainedAction {
       window.oncontextmenu = window.pantheonTestOriginalOnContextMenuHandler;
       delete window.pantheonTestOriginalOnContextMenuHandler;
     `);
+    await browser.waitForAngular();
   }
 
   /**
@@ -295,6 +297,7 @@ export class ChainedAction {
 
     const element = await this.getElement(locator, description);
     await browser.touchActions().tap(element).perform();
+    await browser.waitForAngular();
   }
 }
 
@@ -341,6 +344,7 @@ export async function type(text: string) {
   log(description);
   const element = await browser.driver.switchTo().activeElement();
   await element.sendKeys(text);
+  await browser.waitForAngular();
 }
 
 /**
