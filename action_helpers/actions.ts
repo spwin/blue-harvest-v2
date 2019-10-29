@@ -171,11 +171,14 @@ export class ChainedAction {
     return SLOWNESS_MAP.get(this.context.slow)!.timeout;
   }
 
-  private async getElement(locator: FlexibleLocator, description: string):
-      Promise<WebElement> {
+  private async getElement(
+    locator: FlexibleLocator,
+    description: string,
+    options?: BrowserSideOptions
+  ): Promise<WebElement> {
     const response = await retryingFind(
         this.context.addLocator(Position.GLOBAL, locator).locators,
-        this.timeout(), description, {allowUnseen: true});
+        this.timeout(), description, { ...options, allowUnseen: true });
     if (response === true) {
       throw new Error(
           'An element is expected, but the client side script did ' +
@@ -199,7 +202,7 @@ export class ChainedAction {
     log(description);
 
     try {
-      return await this.getElement(locator, description);
+      return await this.getElement(locator, description, options);
     } catch (e) {
       if (e.message.startsWith(`Failed to find ${description}`)) {
         return null;
