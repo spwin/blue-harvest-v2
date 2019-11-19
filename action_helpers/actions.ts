@@ -10,7 +10,7 @@
  *    click('Order Sandwich');
  */
 
-import {browser, protractor, WebElement} from 'protractor';
+import {browser, by, protractor, WebElement} from 'protractor';
 import * as webdriver from 'selenium-webdriver';
 
 import {BrowserSideOptions, retryingFind} from './find';
@@ -302,6 +302,24 @@ export class ChainedAction {
     await browser.touchActions().tap(element).perform();
     await browser.waitForAngular();
   }
+
+  /**
+   * Type the given filepath into the first input[type="file"] element
+   * satisfying the current context, allowing to upload files through standard
+   * HTML file inputs
+   */
+  async uploadFile(filepath: string) {
+    const description = `${this.description()}uploadFile(${this.pretty(filepath)})`;
+    log(description);
+
+    const element = await this.getElement(
+      by.xpath('//input[@type="file"]'),
+      description,
+      { allowCovered: true },
+    );
+    await element.sendKeys(filepath);
+    await browser.waitForAngular();
+  }
 }
 
 const defaultAction = ActionContext.default();
@@ -317,6 +335,8 @@ export const click = baseAction.click.bind(baseAction);
 export const longPress = baseAction.longPress.bind(baseAction);
 
 export const tap = baseAction.tap.bind(baseAction);
+
+export const uploadFile = baseAction.uploadFile.bind(baseAction);
 
 export const not = baseAction.not;
 
