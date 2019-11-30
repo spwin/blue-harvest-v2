@@ -244,6 +244,14 @@ var browserSideFind = function(locators, opt_options) {
       var maybeDisplayed = all.filter(isMaybeDisplayed);
       if (maybeDisplayed.length == 1 && shouldAutoScroll(maybeDisplayed[0])) {
         maybeDisplayed[0].scrollIntoView();
+        var fixedHeader = document.querySelector('[data-blue-harvest="fixed-header"]');
+        if (fixedHeader) {
+          var fixedHeaderHeight = fixedHeader.getBoundingClientRect().height;
+          var scrollY = window.scrollY;
+          if (scrollY && fixedHeaderHeight) {
+            window.scroll(0, scrollY - fixedHeaderHeight);
+          }
+        }
         if (hasCorrectDisplayStatus(maybeDisplayed[0])) {
           candidateElements = maybeDisplayed;
         }
