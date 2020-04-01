@@ -304,6 +304,19 @@ export class ChainedAction {
   }
 
   /**
+   * Mouse over the first element with the given locator and satisfying the
+   * current context. Throws an error if an element cannot be found.
+   */
+  async mouseOver(locator: FlexibleLocator) {
+    const description = `${this.description()}mouseOver(${this.pretty(locator)})`;
+    log(description);
+
+    const element = await this.getElement(locator, description);
+    await browser.actions().mouseMove(element).perform();
+    await browser.waitForAngular();
+  }
+
+  /**
    * Type the given filepath into the first input[type="file"] element
    * satisfying the current context, allowing to upload files through standard
    * HTML file inputs
@@ -335,6 +348,8 @@ export const click = baseAction.click.bind(baseAction);
 export const longPress = baseAction.longPress.bind(baseAction);
 
 export const tap = baseAction.tap.bind(baseAction);
+
+export const mouseOver = baseAction.mouseOver.bind(baseAction);
 
 export const uploadFile = baseAction.uploadFile.bind(baseAction);
 
